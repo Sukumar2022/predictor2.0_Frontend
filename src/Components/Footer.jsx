@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="w-full p-2 flex justify-around items-center flex-wrap gap-5">
           <div className="p-2 flex justify-around items-baseline flex-col">
             <img
-              src="../../public/images/logo.png"
+              src="/images/logo.png"
               alt="logo"
               className="w-40 h-12 mb-4 rounded"
             />
