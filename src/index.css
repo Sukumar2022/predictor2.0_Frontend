@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+body{
+    background-color: #161317;
+    /* background-color: ; */
+    scroll-behavior: smooth;
+}
+.main{
+    height: auto;
+    width: 100%;
+}
+.navbar{
+    font-family: Poppins;
+    background-color: #1a161b;
+
+}
+
+.fun-font{
+    font-family: Funnel Display;
+}
+.pop-font{
+    font-family: Poppins;
+}
+.home-top{
+    /* background-color: #161317; */
+    font-family: Funnel Display;
+}
+.aboutCard:hover{
+    cursor: pointer;
+    box-shadow: rgba(62, 82, 192, 0.25) 0px 54px 55px, rgba(44, 70, 156, 0.171) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.teams{
+    height: auto;
+    min-height: 200vh;
+    width: 100%;
+}
+.clip-Path {
+    clip-path: polygon(48% 0, 100% 0, 100% 69%, 87% 82%, 100% 90%, 100% 100%, 0 100%, 0 0);
+}
+.card-border:hover{
+    cursor: pointer;
+    box-shadow: rgba(49, 49, 73, 0.1) 0px 8px 24px, rgba(102, 103, 212, 0.445) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    transform: scale(1.05);
+    background-color: #1a161b;
+}
+.teamCard:hover{
+    cursor: pointer;
+    box-shadow: rgba(49, 49, 73, 0.1) 0px 8px 24px, rgba(239, 255, 11, 0.212) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    transform: scale(1.05);
+    background-color: #1a161b;
+}
