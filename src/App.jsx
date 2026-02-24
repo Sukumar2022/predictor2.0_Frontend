@@ -8,6 +8,7 @@ import './Components/charts/chartSetup'
 import Teams from './Pages/Teams'
 import About from './Pages/About'
 import Login from './Pages/Login'
+import Pricing from './Pages/Pricing'
 
 
 const App = () => {
@@ -32,6 +33,10 @@ const App = () => {
         {
           path:"services",
           element:<Services/>
+        },
+        {
+          path:"pricing",
+          element:<Pricing/>
         },
       ]
     },
