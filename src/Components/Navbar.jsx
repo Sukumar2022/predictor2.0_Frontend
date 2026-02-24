@@ -45,8 +45,12 @@ const Navbar = () => {
           </li>
           <li className="inline-block mx-3 cursor-pointer p-3 rounded-3xl transition-all duration-200 text-white hover:text-black hover:bg-white ease-linear">
             <Link to="/services">
-              {" "}
               <i class="ri-line-chart-line text-lg"></i> Services
+            </Link>
+          </li>
+          <li className="inline-block mx-3 cursor-pointer p-3 rounded-3xl transition-all duration-200 text-white hover:text-black hover:bg-white ease-linear">
+            <Link to="/pricing">
+              <i class="ri-line-chart-line text-lg"></i> Pricing
             </Link>
           </li>
         </motion.ul>
@@ -55,8 +59,8 @@ const Navbar = () => {
           className="text-white text-4xl cursor-pointer block sm:hidden"
           onClick={() => setisOpen(!isOpen)}
         >
-          {" "}
-          <i class="ri-menu-5-line"></i>{" "}
+          
+          <i class="ri-menu-5-line"></i>
         </span>
 
         <div className="flex justify-center align-middle">
@@ -89,8 +93,8 @@ const Navbar = () => {
           className="absolute top-10 text-2xl right-10 text-white hover:text-red-500 cursor-pointer"
           onClick={() => setisOpen(!isOpen)}
         >
-          {" "}
-          <i className="ri-close-circle-fill"></i>{" "}
+          
+          <i className="ri-close-circle-fill"></i>
         </p>
         <motion.ul
           className=""
@@ -116,6 +120,11 @@ const Navbar = () => {
           <li className="my-3 cursor-pointer p-3 rounded-3xl transition-all duration-200 text-white hover:text-black hover:bg-white ease-linear">
             <Link to="/services">
               <i class="ri-line-chart-line text-2xl"></i> Services
+            </Link>
+          </li>
+          <li className="my-3 cursor-pointer p-3 rounded-3xl transition-all duration-200 text-white hover:text-black hover:bg-white ease-linear">
+            <Link to="/pricing">
+              <i class="ri-line-chart-line text-2xl"></i> Pricing
             </Link>
           </li>
         </motion.ul>
