@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="navbar h-20 w-full text-black flex justify-between items-center px-8 shadow-lg">
         {/* logo  */}
         <motion.img
-          src="../../public/images/logo.png"
+          src="/images/logo.png"
           className="h-8 w-26 rounded"
           initial={{ x: -300 }}
           animate={{

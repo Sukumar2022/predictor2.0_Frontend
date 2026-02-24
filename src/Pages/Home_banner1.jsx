@@ -18,7 +18,7 @@ const Home_banner1 = () => {
         </motion.div>
       </div>
       <div className="h-auto bg-[#161317] w-full p-5 flex justify-center items-start">
-        <motion.div className="banner1-img h-[70vh] w-[95%] bg-[url('images/banner1.jpg')] bg-cover bg-center rounded-3xl relative" initial={{ opacity: 0, scale:0.7 }} animate={{ opacity: 1, scale:1 }} transition={{ duration: 1, delay:3.3 }}>
+        <motion.div className="banner1-img h-[70vh] w-[95%] bg-[url('/images/banner1.jpg')] bg-cover bg-center rounded-3xl relative" initial={{ opacity: 0, scale:0.7 }} animate={{ opacity: 1, scale:1 }} transition={{ duration: 1, delay:3.3 }}>
           <div className="absolute bottom-8 left-10 w-auto h-auto p-2 bg-[#78798a9a] rounded-3xl flex justify-center flex-col items-center flex-wrap gap-3.5 lg:flex-row">
             <Tags tagsTitle='Smart automation'/>
             <Tags tagsTitle='AI manufacturing'/>
