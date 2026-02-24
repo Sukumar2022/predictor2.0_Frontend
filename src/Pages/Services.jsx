@@ -103,6 +103,7 @@ import { useState } from "react";
 import SelectBox from "../Components/SelectBox";
 import PriceSlider from "../Components/PriceSlider";
 import DashboardCharts from "../Components/DashboardCharts";
+import ReviewCard from "../Components/charts/ReviewCard";
 
 const Services = () => {
   const [category, setCategory] = useState("");
@@ -178,6 +179,9 @@ const Services = () => {
 
       <div className="r_sideContent h-auto w-full bg-[#1f1f1f] flex justify-around items-center flex-wrap p-4 rounded-2xl lg:w-210">
         <DashboardCharts />
+      </div>
+      <div className="w-full">
+        <ReviewCard/>
       </div>
     </div>
   );

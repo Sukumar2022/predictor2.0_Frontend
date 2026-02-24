@@ -12,6 +12,7 @@ const DashboardCharts = () => {
 
       <ReliabilityChart />
       <ReviewChart />
+
     </div>
   );
 };

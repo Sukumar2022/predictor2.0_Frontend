@@ -55,8 +55,8 @@ const Footer = () => {
               Predictor 2.0
             </span>
             Made by
-            <Link to="/teams" className="text-blue-400">
-              Team Predictor
+            <Link to="/teams" className="text-blue-400 p-1">
+               Team Predictor
             </Link>
           </p>
         </div>
