@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+
 
 const Navbar = () => {
   const [isOpen, setisOpen] = useState(false);
@@ -9,24 +9,13 @@ const Navbar = () => {
     <>
       <div className="navbar h-20 w-full text-black flex justify-between items-center px-8 shadow-lg">
         {/* logo  */}
-        <motion.img
+        <img
           src="/images/logo.png"
           className="h-8 w-26 rounded"
-          initial={{ x: -300 }}
-          animate={{
-            x: 0,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 120,
-            duration: 2,
-          }}
-        ></motion.img>
-        <motion.ul
+        ></img>
+        <ul
           className="text-sm hidden sm:block"
-          initial={{ y: -300 }}
-          animate={{ y: 0 }}
-          transition={{ type: "spring", stiffness: 120, delay: 1, duration: 1 }}
+      
         >
           <li className="inline-block mx-3 cursor-pointer p-3 rounded-3xl transition-all duration-200 text-white hover:text-black hover:bg-white ease-linear">
             <Link to="/">
@@ -53,7 +42,7 @@ const Navbar = () => {
               <i class="ri-line-chart-line text-lg"></i> Pricing
             </Link>
           </li>
-        </motion.ul>
+        </ul>
         {/* navbar btn  */}
         <span
           className="text-white text-4xl cursor-pointer block sm:hidden"
@@ -65,19 +54,11 @@ const Navbar = () => {
 
         <div className="flex justify-center align-middle">
           <Link to="/login">
-            <motion.button
+            <button
               className="contact-btn bg-blue-500 text-white px-2 py-2 rounded-md hover:bg-blue-600 hover:pointerbg-violet-500 hover:er:bg-violet-600 ease-out focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700 ... transition-all cursor-pointer"
-              initial={{ y: 300, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 120,
-                delay: 2,
-                duration: 3,
-              }}
             >
               Login
-            </motion.button>
+            </button>
           </Link>
         </div>
       </div>
@@ -96,7 +77,7 @@ const Navbar = () => {
           
           <i className="ri-close-circle-fill"></i>
         </p>
-        <motion.ul
+        <ul
           className=""
           initial={{ y: -300 }}
           animate={{ y: 0 }}
@@ -127,7 +108,7 @@ const Navbar = () => {
               <i class="ri-line-chart-line text-2xl"></i> Pricing
             </Link>
           </li>
-        </motion.ul>
+        </ul>
       </div>
     </>
   );

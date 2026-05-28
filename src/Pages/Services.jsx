@@ -1,187 +1,212 @@
-// import React, { useState } from "react";
-// import SelectBox from "../Components/SelectBox";
-// import PriceSlider from "../Components/PriceSlider";
-// import DashboardCharts from "../Components/DashboardCharts";
-
-// const Services = () => {
-//   const [category, setCategory] = useState("");
-//   const [productType, setproductType] = useState("");
-//   const categories = [
-//     { value: "electronics", label: "Electronics" },
-//     { value: "Home Appliance", label: "Home Appliance" },
-//     { value: "Electrical & Accessories", label: "Electrical & Accessories" },
-//     { value: "Kitchen Appliances", label: "Kitchen Appliances" },
-//   ];
-//   const product_type = [
-//     { value: "mobile", label: "Mobile" },
-//     { value: "laptop", label: "Laptop" },
-//     { value: "tablet", label: "Tablet" },
-//   ];
-//   const [price, setPrice] = useState(500);
-//   const [open, setOpen] = useState(true);
-
-//   return (
-//     <>
-//       <div className="min-h-160vh h-auto w-full bg-red-200 relative flex justify-center items-center">
-//         <div className="pop-font h-auto w-full relative p-3 bg-[#2a262b]">
-//           {/* sidebar icon  */}
-//           {!open && (
-//             <div
-//               onClick={() => setOpen(true)}
-//               className="absolute top-5 left-5 text-3xl text-white cursor-pointer z-50"
-//             >
-//               <i className="ri-arrow-right-double-line"></i>
-//             </div>
-//           )}
-
-//           {/* ----side bar---- */}
-//           <div
-//             className={`side-bar relative duration-500
-//               h-200 w-90 bg-[#1f1f1f] text-white
-//               left-0 bottom-0 rounded-xl flex flex-col
-//               justify-center items-center gap-3 shadow-2xl
-//               ${open ? "translate-x-0" : "-translate-x-110"}
-//             `}
-//           >
-//             <p
-//               className="absolute top-2 right-5 text-3xl hover: cursor-pointer"
-//               onClick={() => setOpen(!open)}
-//             >
-//               <i class="ri-arrow-left-double-fill"></i>
-//             </p>
-//             <h3 className="fun-font text-white text-2xl capitalize">
-//               <i className="ri-box-3-line"></i> your selection
-//             </h3>
-//             <form>
-//               <SelectBox
-//                 label="Category"
-//                 options={categories}
-//                 value={category}
-//                 onChange={(e) => setCategory(e.target.value)}
-//               />
-//               <SelectBox
-//                 label="Product Type"
-//                 options={product_type}
-//                 value={productType}
-//                 onChange={(e) => setproductType(e.target.value)}
-//               />
-//               <PriceSlider
-//                 min={500}
-//                 max={150000}
-//                 step={50}
-//                 value={price}
-//                 onChange={setPrice}
-//               />
-
-//               <button className="pop-font bg-blue-500 text-white text-sm p-3 capitalize rounded mt-12 hover: cursor-pointer">
-//                 Predict Best E-Shop
-//               </button>
-//             </form>
-//           </div>
-
-//           {/* right-section */}
-//           {/* results will be shown here */}
-
-//           <div
-//             className={`min-h-162 p-10 rounded-xl max-w-full bg-[#1f1f1f]
-//                 absolute m-2 right-0 top-1 transition-all duration-500
-//                 ${open ? "w-[70%]" : "w-[95%]"}
-//               `}
-//           >
-//             <DashboardCharts />
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Services;
-
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import SelectBox from "../Components/SelectBox";
 import PriceSlider from "../Components/PriceSlider";
 import DashboardCharts from "../Components/DashboardCharts";
 import ReviewCard from "../Components/charts/ReviewCard";
 
 const Services = () => {
+  const [allProducts, setAllProducts] = useState([]);
+
   const [category, setCategory] = useState("");
-  const [productType, setproductType] = useState("");
-  const [productName, setproductName] = useState("");
-
-  const categories = [
-    { value: "electronics", label: "Electronics" },
-    { value: "Home Appliance", label: "Home Appliance" },
-    { value: "Electrical & Accessories", label: "Electrical & Accessories" },
-    { value: "Kitchen Appliances", label: "Kitchen Appliances" },
-  ];
-  const product_type = [
-    { value: "mobile", label: "Mobile" },
-    { value: "laptop", label: "Laptop" },
-    { value: "tablet", label: "Tablet" },
-  ];
-  const product_name = [
-    { value: "iphone_15", label: "iPhone 15" },
-    { value: "samsung_s24", label: "Samsung Galaxy S24" },
-    { value: "pixel_8", label: "Google Pixel 8" },
-    { value: "oneplus_12", label: "OnePlus 12" },
-    { value: "xiaomi_14", label: "Xiaomi 14" },
-    { value: "realme_gt5", label: "Realme GT 5" },
-  ];
-  
+  const [productType, setProductType] = useState("");
+  const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(500);
-  // const [open, setOpen] = useState(true);
+
+  const [categories, setCategories] = useState([]);
+  const [productTypes, setProductTypes] = useState([]);
+  const [productNames, setProductNames] = useState([]);
+
+  const API_URL = "http://127.0.0.1:8000/api/products/";
+
+  useEffect(() => {
+    axios
+      .get(API_URL)
+      .then((response) => {
+        const rawData = response.data;
+        setAllProducts(rawData);
+        const uniqueCategories = [
+          ...new Set(rawData.map((item) => item.category)),
+        ];
+
+        const categoryOptions = uniqueCategories.map((cat) => ({
+          value: cat,
+          label: cat.charAt(0).toUpperCase() + cat.slice(1),
+        }));
+
+        setCategories(categoryOptions);
+      })
+      .catch((err) => console.error("Error loading initial inventory:", err));
+  }, []);
+
+  useEffect(() => {
+    if (!category) {
+      setProductTypes([]);
+      setProductType("");
+      return;
+    }
+
+    const filteredItems = allProducts.filter(
+      (item) => item.category === category,
+    );
+    const uniqueSubcats = [
+      ...new Set(filteredItems.map((item) => item.subcategory)),
+    ];
+
+    const typeOptions = uniqueSubcats.map((sub) => ({
+      value: sub,
+      label: sub.charAt(0).toUpperCase() + sub.slice(1),
+    }));
+
+    setProductTypes(typeOptions);
+    setProductType("");
+    setProductNames([]);
+    setProductName("");
+  }, [category, allProducts]);
+
+  useEffect(() => {
+    if (!productType) {
+      setProductNames([]);
+      setProductName("");
+      return;
+    }
+
+    const filteredItems = allProducts.filter(
+      (item) => item.category === category && item.subcategory === productType,
+    );
+
+    const nameOptions = filteredItems.map((item) => ({
+      value: item.name,
+      label: item.name,
+    }));
+
+    setProductNames(nameOptions);
+    setProductName("");
+  }, [productType, category, allProducts]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      category: category,
+      product_type: productType,
+      product_name: productName,
+      price: price,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/predict/",
+        payload,
+      );
+      console.log("Prediction success:", response.data);
+    } catch (error) {
+      console.error("Prediction request failed:", error);
+    }
+  };
+
   return (
-    <div className="min-h-[110vh] h-auto w-full justify-between items-center flex flex-wrap p-4 gap-4 ">
-      {/* left sidebar  */}
+    <div className="min-h-screen w-full bg-[#0d0f12] text-gray-100 font-sans antialiased p-4 md:p-6 lg:p-8 selection:bg-blue-500/30 selection:text-blue-200">
+      {/* Dynamic Workspace Container */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        {/* ================= SIDEBAR CONFIGURATOR ================= */}
+        <div className="lg:col-span-4 bg-[#14171c]/90 border border-gray-800/60 rounded-3xl p-6 shadow-2xl backdrop-blur-md relative overflow-hidden group">
+          {/* Subtle Cybernetic Top Accent Bar */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-80" />
 
-      <div className="l_sideNav min-h-40 h-auto w-full relative duration-500 bg-[#1f1f1f] text-white left-0 bottom-0 rounded-xl flex flex-col justify-baseline items-center gap-3 shadow-2xl p-4 lg:w-110 lg:h-188">
-        {/* <p className="absolute top-2 right-5 text-3xl hover: cursor-pointer">
-          <i class="ri-arrow-left-double-fill"></i>
-        </p> */}
-        <h3 className="fun-font text-white text-2xl capitalize">
-          <i className="ri-box-3-line"></i> your selection
-        </h3>
-        <form>
-          <SelectBox
-            label="Category"
-            options={categories}
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          />
-          <SelectBox
-            label="Product Type"
-            options={product_type}
-            value={productType}
-            onChange={(e) => setproductType(e.target.value)}
-          />
-          <SelectBox
-            label="Product Name"
-            options={product_name}
-            value={productName}
-            onChange={(e) => setproductName(e.target.value)}
-          />
-          <PriceSlider
-            min={500}
-            max={150000}
-            step={50}
-            value={price}
-            onChange={setPrice}
-          />
-          <button className="pop-font bg-blue-500 text-white text-sm p-3 capitalize rounded mt-12 hover: cursor-pointer">
-            Predict Best E-Shop
-          </button>
-        </form>
-      </div>
+          <div className="w-full flex flex-col gap-6">
+            <header className="flex items-center gap-3 border-b border-gray-800/60 pb-4">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-inner">
+                <i className="ri-box-3-line text-xl"></i>
+              </div>
+              <div>
+                <h3 className="fun-font text-lg font-bold text-white tracking-wide capitalize">
+                  Configurator
+                </h3>
+                <p className="text-xs text-gray-400 font-medium tracking-tight">
+                  Tune variables to run the engine
+                </p>
+              </div>
+            </header>
 
-      {/* right section  */}
+            <form
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col gap-5"
+            >
+              <div className="w-[96%] grid grid-cols-1 gap-3.5 sm:gap-4 max-w-full overflow-hidden">
+                <SelectBox
 
-      <div className="r_sideContent h-auto w-full bg-[#1f1f1f] flex justify-around items-center flex-wrap p-4 rounded-2xl lg:w-210">
-        <DashboardCharts />
-      </div>
-      <div className="w-full">
-        <ReviewCard/>
+                  required
+                  label="Category"
+                  options={categories}
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                />
+                <SelectBox
+                  label="Product Type"
+                  options={productTypes}
+                  value={productType}
+                  onChange={(e) => setProductType(e.target.value)}
+                  disabled={!category}
+                />
+                <SelectBox
+                  label="Product Name"
+                  options={productNames}
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                  disabled={!productType}
+                />
+              </div>
+
+              <div className="mt-2 bg-[#1a1f26] border border-gray-800/40 p-4 rounded-2xl shadow-inner">
+                <PriceSlider
+                  min={500}
+                  max={150000}
+                  step={50}
+                  value={price}
+                  onChange={setPrice}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full pop-font font-semibold text-sm py-3.5 px-4 rounded-2xl text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-[0_4px_20px_rgba(37,99,235,0.25)] hover:shadow-[0_4px_25px_rgba(37,99,235,0.4)] transition-all duration-300 active:scale-[0.97] cursor-pointer mt-4 flex items-center justify-center gap-2 tracking-wide"
+              >
+                <span>Predict Best E-Shop</span>
+                <i className="ri-arrow-right-line text-base"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* ================= ANALYTICS MONITOR ================= */}
+        <div className="lg:col-span-8 bg-[#14171c]/90 border border-gray-800/60 rounded-3xl shadow-2xl p-6 relative overflow-hidden backdrop-blur-md min-h-[500px] flex flex-col justify-between">
+          {/* Geometric subtle decoration dot grids */}
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Section Header */}
+          <header className="flex items-center justify-between border-b border-gray-800/60 pb-4 mb-6 w-full">
+            <div className="flex items-center gap-3">
+              <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <h4 className="text-sm font-bold tracking-wider uppercase text-gray-400 block-font">
+                Analytical Monitor
+              </h4>
+            </div>
+            <span className="text-[10px] bg-gray-800 border border-gray-700/50 text-gray-300 font-mono px-2 py-0.5 rounded-md uppercase tracking-tight">
+              Real-time Output
+            </span>
+          </header>
+
+          {/* Dashboard Canvas rendering space */}
+          <div className="w-full flex-grow flex items-center justify-center relative z-10 overflow-hidden rounded-xl bg-[#0d0f12]/40 border border-gray-900/50 p-2 md:p-4">
+            <DashboardCharts />
+          </div>
+        </div>
+
+        {/* ================= TESTIMONIAL / FOOTER TRACK ================= */}
+        <div className="col-span-1 lg:col-span-12 mt-4">
+          <ReviewCard />
+        </div>
       </div>
     </div>
   );

@@ -14,10 +14,10 @@ const Home_banner2 = () => {
           viewport={{ once: true, amount: 0.5 }}
         />
         <div>
-          <motion.h1 className="fun-font align-middle w-90 text-4xl p-3 text-white font-bold lg:w-145 lg:text-5xl" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.7 }} viewport={{ once: true, amount: 0.5 }}>
+          <motion.h1 className="fun-font align-middle w-80 text-4xl p-3 text-white font-bold lg:w-145 lg:text-5xl" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.7 }} viewport={{ once: true, amount: 0.5 }}>
             Experience the Future of Shopping with Our AI-Powered Predictor!
           </motion.h1>
-          <motion.p className="text-white text-xl mt-4 w-100 p-3 lg:w-145 lg:text-2xl" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1 }} viewport={{ once: true, amount: 0.5 }}>
+          <motion.p className="text-white text-xl mt-4 w-80 p-3 lg:w-145 lg:text-2xl" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1 }} viewport={{ once: true, amount: 0.5 }}>
             Unlock smarter shopping decisions with our cutting-edge AI
             predictor. Get personalized recommendations, compare products, and
             save time and money on every purchase. Embrace the future of
